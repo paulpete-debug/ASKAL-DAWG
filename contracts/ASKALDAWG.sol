@@ -70,8 +70,18 @@ const config: HardhatUserConfig = {
 };
 
 export default config;npx hardhat run scripts/deploy.ts --network skalenpx hardhat run scripts/deploy.ts --network skale
-
----
+---{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
 
 ## contracts/ASKALDAWG.sol
 
