@@ -1,7 +1,7 @@
 name: Deploy to SKALE Europa Hub
 
 on:
-  push:
+  push: 
     branches: [main]
 
 jobs:
