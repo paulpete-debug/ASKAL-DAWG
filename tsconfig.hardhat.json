@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "noEmit": true
+  },
+  "include": [
+    "hardhat.config.ts",
+    "scripts",
+    "test",
+    "deploy",
+    "tasks",
+    "typechain-types"
+  ]
+}
