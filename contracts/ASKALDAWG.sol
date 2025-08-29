@@ -1,4 +1,19 @@
-# ASKALDAWG — gasless mainnet token (SKALE) without relayer
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract ASKALDAWG is ERC20, ERC20Permit, Ownable {
+    constructor(address initialOwner, uint256 initialSupply)
+        ERC20("ASKALDAWG", "ASKALDAWG")
+        ERC20Permit("ASKALDAWG")
+        Ownable(initialOwner)
+    {
+        _mint(initialOwner, initialSupply);
+    }
+}# ASKALDAWG — gasless mainnet token (SKALE) without relayer
 
 > Production-ready Hardhat project to deploy **ASKALDAWG** on **SKALE Europa Hub mainnet** (gas-free). No relayer required. Deployment and transactions are executed directly by the deployer wallet using valueless sFUEL.
 
@@ -17,7 +32,44 @@ askaldawg/
 ├─ tsconfig.json
 ├─ .env.example
 └─ README.md
-```
+```import { ethers } from "hardhat";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+async function main() {
+  const [deployer] = await ethers.getSigners();
+
+  const owner = process.env.OWNER_ADDRESS!;
+  const supply = process.env.INITIAL_SUPPLY!;
+
+  const ASKALDAWG = await ethers.getContractFactory("ASKALDAWG");
+  const token = await ASKALDAWG.deploy(owner, supply);
+
+  await token.deployed();
+
+  console.log(`ASKALDAWG deployed to: ${token.address}`);
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});import { HardhatUserConfig } from "hardhat/config";
+import "@nomicfoundation/hardhat-toolbox";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+const config: HardhatUserConfig = {
+  solidity: "0.8.24",
+  networks: {
+    skale: {
+      url: process.env.RPC_URL,
+      accounts: [process.env.DEPLOYER_KEY!],
+      chainId: 2046399126, // SKALE Europa Hub mainnet
+    },
+  },
+};
+
+export default config;npx hardhat run scripts/deploy.ts --network skalenpx hardhat run scripts/deploy.ts --network skale
 
 ---
 
